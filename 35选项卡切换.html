@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.obox{
+				width: 90%;
+				
+				border: solid 1px #999;
+				margin: 50px auto 0px;
+				border-radius: 10px;
+				overflow: hidden;
+			}
+			.hd{
+				height: 60px;
+				background: rgb(247,247,247);
+				border-bottom:  solid 1px #999;
+				display: flex;
+				align-items: flex-end;
+				padding-left: 10px;
+			}
+			.hd span{
+				height: 46px;
+				line-height: 46px;
+				padding: 0px 20px;
+				position: relative;
+				border-radius: 6px 6px 0px 0px;
+				border: solid 1px transparent;
+			}
+			.hd .active{
+				border: solid 1px #999;
+				border-bottom: none;
+				background: white;
+				top: 1px;
+				
+			}
+			.content{
+				text-align: center;
+				padding: 20px;
+			}
+			.content h3{
+				font-size: 24px;
+			}
+			.content p{
+				margin: 20px 0px;
+			}
+			.content button{
+				background: rgb(0,112,252);
+				color: white;
+				padding: 10px 25px;
+				border-radius: 8px;
+				border: none;
+				outline: none;
+			}
+			.content>div{
+				display: none;
+			}
+			.content>div:first-child{
+				display: block;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+				var spanAll = document.querySelectorAll("span");
+				var content = document.querySelector(".content");
+				var div = content.querySelectorAll("div");
+				for(var i=0;i<spanAll.length;i++){
+//					spanAll[i].index = i;
+					spanAll[i].setAttribute("index",i);
+					spanAll[i].onclick = function(){
+						for(var j=0;j<spanAll.length;j++){
+							spanAll[j].className="";
+							div[j].style.display = "none";
+						}
+						this.className="active";
+						div[this.getAttribute("index")].style.display="block";
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div class="obox">
+			<div class="hd">
+				<span class="active">按钮一</span>
+				<span>按钮二</span>
+				<span>按钮三</span>
+			</div>
+			<div class="content">
+				<div>
+					<h3>Special title treatment1</h3>
+					<p>With supporting text below as a natural lead-in to additional content.</p>
+					<button>GO somewhere</button>
+				</div>
+				<div>
+					<h3>Special title treatment2</h3>
+					<p>With supporting text below as a natural lead-in to additional content.</p>
+					<button>GO somewhere</button>
+				</div>
+				<div>
+					<h3>Special title treatment3</h3>
+					<p>With supporting text below as a natural lead-in to additional content.</p>
+					<button>GO somewhere</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

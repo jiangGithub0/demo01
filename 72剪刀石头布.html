@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			.obox{
+				width: 96%;
+				margin: 0 auto;
+			}
+			.obox>div{
+				border-bottom: solid 5px black;
+				padding: 50px 0px;
+				position: relative;
+			}
+			.box1{
+				display: flex;
+				justify-content: space-between;
+				padding: 50px 0px 20px !important;
+			}
+			.box1 h2{
+				font-size: 40px;
+			}
+			.list{
+				display: flex;
+				justify-content: space-between;
+				list-style: none;
+			}
+			.list li{
+				width: 50%;
+				display: flex;
+				justify-content: space-between;
+				border-right: solid 5px black;
+			}
+			.list li:last-child{
+				border: none;
+			}
+			.list div{
+				display: flex;
+				font-size: 30px;
+				color: red;
+			}
+			.list img{
+				margin: 0px 40px;
+			}
+			.list li:last-child div{
+				color: greenyellow;
+			}
+			.list h3{
+				margin: 0px 50px;
+			}
+			.me_img{
+				-webkit-transform: rotateY(180deg);
+				transform: rotateY(180deg);
+			}
+			.box3{
+				display: flex;
+				justify-content: center;
+			}
+			.box3>div{
+				width: 120px;
+				height: 120px;
+				border: solid 5px black;
+				border-radius: 10px;
+				background: rgb(255,195,50);
+				margin: 0px 1%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				/*animation: myscale 0.25s linear 4 ;*/
+			}
+			@keyframes myscale{
+				0%{transform: scale(1,1);}
+				50%{transform: scale(1.1,1.1);}
+				100%{transform: scale(1,1);}
+			}
+			.pop{
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 100vh;
+				background: rgba(0,0,0,0);
+				display: none;
+			}
+			.box3 .active img{
+				animation: myimg 0.25s linear 5 ;
+			}
+			@keyframes myimg{
+				0%{filter:drop-shadow(0px 0px 2px blue) drop-shadow(0px 0px 2px blue) drop-shadow(0px 0px 2px blue);}
+				50%{filter:drop-shadow(0px 0px 0px blue) drop-shadow(0px 0px 0px blue) drop-shadow(0px 0px 0px blue);}
+				100%{filter:drop-shadow(0px 0px 2px blue) drop-shadow(0px 0px 2px blue) drop-shadow(0px 0px 2px blue);}
+			}
+			.me_img{
+				/*animation: myme_img 1s linear forwards;*/
+			}
+			@keyframes myme_img{
+				from{transform: rotate(-90deg) scale(1.2,1.2) rotateY(180deg);}
+				to{transform: rotate(0deg) scale(1,1) rotateY(180deg);}
+			}
+			@keyframes mycom_img{
+				from{transform: rotate(90deg) scale(1.2,1.2) rotateY(0deg);}
+				to{transform: rotate(0deg) scale(1,1) rotateY(0deg);}
+			}
+			@keyframes green{
+				0%{background: rgb(255,255,255);}
+				50%{background: green;}
+				100%{background: rgb(255,255,255);}
+			}
+			@keyframes red{
+				0%{background: rgb(255,255,255);}
+				50%{background: red;}
+				100%{background: rgb(255,255,255);}
+			}
+			@keyframes ccc{
+				0%{background: rgb(255,255,255);}
+				50%{background: #ccc;}
+				100%{background: rgb(255,255,255);}
+			}
+			.pp{
+				text-align: center;
+				position: fixed;
+				width: 100%;
+				top: 15px;
+				color: #666;
+				animation: mypp 1s linear 2s forwards;
+			}
+			@keyframes mypp{
+				from{opacity: 1;}
+				to{opacity: 0;}
+			}
+			.over{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background: green;
+				top: 0px;
+				left: 0px;
+				font-size: 40px;
+				text-align: center;
+				display: none;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				z-index: 99;
+			}
+			.again{
+				background: rgb(255,195,50);
+				border: none;
+				outline: medium;
+				padding: 5px 10px;
+				border-radius: 10px;
+				margin-top: 20px;
+			}
+		</style>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded",function(){
+				var box3 = document.querySelector(".box3");
+				var btn = box3.querySelectorAll("div");
+				var pop = document.querySelector(".pop");
+				var me_img = document.querySelector(".me_img");
+				var com_img = document.querySelector(".com_img");
+				var box2 = document.querySelector(".box2");
+				var bout = document.querySelector(".bout");
+				var over = document.querySelector(".over");
+				var over_title = document.querySelector(".over_title");
+				var again = document.querySelector(".again");
+				var me_score = document.querySelector(".me_score");
+				var com_score = document.querySelector(".com_score");
+				var arr =["100.png","101.png","102.png","103.png","104.png"];
+				var names = ["stone","cloth","scissor","lizard","worm"];
+				var num = 0;//回合数
+				var me_score_num=0;//我的分数
+				var com_score_num=0;//电脑分数
+				for(var i=0;i<btn.length;i++){
+					btn[i].index = i;
+					btn[i].onclick = function(){
+						num++;
+						pop.style.display="block";
+						//放大效果
+						var that = this;
+						that.className = "active";
+						that.style.animation = "myscale 0.25s linear 4 ";
+						//切换图片
+						//我
+						me_img.src = that.querySelector("img").src;
+						me_img.setAttribute("name",names[that.index]);
+						me_img.style.animation="myme_img 0.5s linear forwards";
+						
+						//电脑
+						var n1 = Math.floor(Math.random()*arr.length);//[0,4]
+						com_img.src = "img/"+arr[n1];
+						com_img.setAttribute("name",names[n1]);
+						com_img.style.animation="mycom_img 0.5s linear forwards";
+						
+						if((me_img.getAttribute("name")=="stone" && com_img.getAttribute("name")=="scissor") ||(me_img.getAttribute("name")=="stone" && com_img.getAttribute("name")=="lizard") || (me_img.getAttribute("name")=="cloth" && com_img.getAttribute("name")=="stone")|| (me_img.getAttribute("name")=="cloth" && com_img.getAttribute("name")=="worm") || (me_img.getAttribute("name")=="scissor" && com_img.getAttribute("name")=="cloth")|| (me_img.getAttribute("name")=="scissor" && com_img.getAttribute("name")=="lizard") || (me_img.getAttribute("name")=="lizard" && com_img.getAttribute("name")=="worm")||(me_img.getAttribute("name")=="lizard" && com_img.getAttribute("name")=="cloth")||(me_img.getAttribute("name")=="worm" && com_img.getAttribute("name")=="stone") ||(me_img.getAttribute("name")=="worm" && com_img.getAttribute("name")=="scissor")){
+							//赢
+							box2.style.animation = "green 1s linear";
+							//我的分数加一
+							me_score_num++;
+							me_score.innerHTML = me_score_num;
+						}else if(me_img.getAttribute("name")==com_img.getAttribute("name")){
+							//平局
+							box2.style.animation = "ccc 1s linear";
+						}else{
+							//输
+							//电脑分数加一
+							com_score_num++;
+							com_score.innerHTML = com_score_num;
+							box2.style.animation = "red 1s linear";
+						}
+						//回合数
+						bout.innerHTML = num+"/10";
+						
+						window.setTimeout(function(){
+							that.style.animation ="none";
+							that.className = "";
+							me_img.style.animation="none";
+							com_img.style.animation="none"
+							box2.style.animation = "none";
+							//游戏结束
+							if(num==10){
+								over.style.display = "flex";
+								if(me_score_num>com_score_num){
+									//赢
+									over.style.background = "green";
+									over_title.innerHTML = "You Win!";
+								}else if(me_score_num==com_score_num){
+									//平局
+									over.style.background = "#ccc";
+									over_title.innerHTML = "Dogfall!";
+								}else{
+									//输
+									over.style.background = "red";
+									over_title.innerHTML = "You Lost!";
+								}
+							}else{
+								pop.style.display="none";
+							}
+						},1000)						
+					}
+				}
+				//点击重新玩
+				again.onclick = function(){
+					pop.style.display="none";
+					over.style.display = "none";
+					com_score_num=0;
+					com_score.innerHTML = com_score_num;
+					me_score_num=0;
+					me_score.innerHTML = me_score_num;
+					num=0;
+					bout.innerHTML = num+"/10";
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<p class="pp">输赢规则：石头赢剪刀，石头赢蜥蜴；布赢石头，布赢虫子；剪刀赢布，剪刀赢蜥蜴；蜥蜴赢布，蜥蜴赢虫子；虫子赢石头，虫子赢剪刀</p>
+		<div class="obox">
+			<div class="box1">
+				<h2>得分：<b class="me_score">0</b></h2>
+				<h2>得分：<b class="com_score">0</b></h2>
+			</div>
+			<div class="box2">
+				<ul class="list">
+					<li>
+						<p class="bout">0/10</p>
+						<div>
+							<h3>我</h3>
+							<img class="me_img" name="" src="img/103.png" />
+						</div>
+					</li>
+					<li>
+						<div>
+							<img class="com_img" name="" src="img/104.png" />
+							<h3>我</h3>
+						</div>
+					</li>
+				</ul>
+				<div class="over">
+					<h3 class="over_title">You Win!</h3>
+					<button class="again">重新玩</button>
+				</div>
+			</div>
+			<div class="box3">
+				<div><img src="img/100.png"/></div>
+				<div><img src="img/101.png"/></div>
+				<div><img src="img/102.png"/></div>
+				<div><img src="img/103.png"/></div>
+				<div><img src="img/104.png"/></div>
+			</div>
+		</div>
+		<div class="pop"></div>
+	</body>
+</html>
