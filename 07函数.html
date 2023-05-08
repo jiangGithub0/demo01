@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			//定义函数
+			function fn(){
+				console.log("这是一个函数");
+			}
+			//调用函数
+			fn();
+			
+			//计算2+8的结果
+			function a1(a,b,c){
+				//形参
+//				console.log(a+b);
+				//返回值
+				return a+b;
+			}
+			console.log(a1(2,8));//实参
+//			console.log(a1(2,8,"hello"));
+			
+			//练习：向一个函数传入不定数量的数值求和。
+			function a2(){
+				//arguments 内置数组对象
+				//length 长度
+				console.log(arguments.length);
+				//通过下标访问数组元素
+				console.log(arguments[3]);
+				//访问数组最后一个元素
+				console.log(arguments[arguments.length-1]);
+				var s1 = 0;
+				for(var i=0;i<arguments.length;i++){
+					s1+=arguments[i];
+				}
+				console.log(s1);
+			}
+			a2(1,2,3,45,6,78,99,45,12,45,25,14,14,14,36,254,25,25,25,25,25,888);
+			
+			
+			//作用域
+			//局部变量就是定义在函数内部的变量，这个变量只能在函数内部使用，即作用域范围只是函数内部，另外，形参也是局部变量。
+			//全局变量就是定义在函数外部的变量，这个变量在任何函数中都有效，即作用域范围是当前文件的任何地方。
+			//注意：定义变量时省略var是不安全的，不过是合法的，不写var的时候会被解释是全局变量
+
+//			function   addNum(n){
+//				 n += 5;//15 
+//			}
+//			var  a=10;
+//			addNum(a);           
+            //alert(a);//10
+			
+			var a = 10;//全局变量
+		    function m1(){
+				var a = 5;//局部变量
+		        //alert(a);//5
+		        
+		        var b = 20;
+		        c = 30;//全局变量
+		    }
+		    m1();
+		    //alert(a); //10
+		    console.log(c);
+		    //console.log(b);//"Uncaught ReferenceError: b is not defined"
+		
+//			函数内部可以再包含其他函数 
+//			函数之间允许相互调用，也允许向外调用, 不可以调用同级函数的嵌套函数
+			function c1(){
+				console.log("c1");
+				
+				function c2(){
+					console.log("c2");
+				}
+				
+				c3();
+			}
+			function c3(){
+				console.log("c3");
+				//c2();//"Uncaught ReferenceError: c2 is not defined"	
+			}
+			c1();
+			
+			//函数还可以自己调用自己，称为递归调用
+			//5的阶乘是多少? 
+			function d1(n){
+				return n>1?n*d1(n-1):1;
+			}
+			console.log(d1(5));
+		</script>
+	</head>
+	<body>
+		<input type="text" value="大话西游" />
+		<button>清空</button>
+	</body>
+</html>
