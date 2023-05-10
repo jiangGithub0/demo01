@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			img{
+				width: 50px;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+			}
+		</style>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded",function(){
+				var img = document.querySelector("img");
+				document.onmousedown = function(){
+					var arr = [];
+					document.onmousemove = function(e){
+						var e = e||event;
+						var xy = {
+							x:e.clientX,
+							y:e.clientY
+						}
+						arr.push(xy);
+					}
+					document.onmouseup = function(){
+						document.onmousemove = null;
+						var i=0;
+						var t1 = setInterval(function(){
+							img.style.top = arr[i].y+"px";
+							img.style.left = arr[i].x+"px";
+							i++;
+							if(i==arr.length){
+								clearInterval(t1);
+							}
+							
+						},50)
+					}
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<img src="img/mosquito2.png" />
+	</body>
+</html>
